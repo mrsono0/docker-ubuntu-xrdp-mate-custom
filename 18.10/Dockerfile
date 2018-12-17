@@ -63,7 +63,7 @@ RUN cd /root && \
         libjpeg-dev \
         libpng-dev \
         epiphany-browser \
-        openjdk-10-jdk \
+        default-jdk \
         openssh-server && \
     ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && dpkg-reconfigure -f noninteractive tzdata && \
     apt-get -y autoclean && apt-get -y autoremove && \
