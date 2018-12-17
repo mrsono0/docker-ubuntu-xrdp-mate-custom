@@ -5,19 +5,19 @@ FROM ubuntu:18.10
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-ENV LANG en_GB.UTF-8
-ENV LANGUAGE en_GB:GB
-ENV LC_ALL en_GB.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:GB
+ENV LC_ALL en_US.UTF-8
 
 RUN cd /root && \
     sed -i 's/^#\s*\(deb.*partner\)$/\1/g' /etc/apt/sources.list && \ 
     apt-get update -y && \ 
     apt-get install -yqq locales  && \ 
-    echo 'LANG="en_GB.UTF-8"' > /etc/default/locale && \ 
-    echo 'LANGUAGE="en_GB:en"' >> /etc/default/locale && \ 
-    echo 'LC_ALL="en_GB.UTF-8"' >> /etc/default/locale && \ 
-    locale-gen en_GB.UTF-8 && \ 
-    update-locale LANG=en_GB.UTF-8  && \ 
+    echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \ 
+    echo 'LANGUAGE="en_US:en"' >> /etc/default/locale && \ 
+    echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale && \ 
+    locale-gen en_US.UTF-8 && \ 
+    update-locale LANG=en_US.UTF-8  && \ 
     apt-get install -yqq \
         mate-desktop-environment-core \
         mate-themes \
@@ -45,6 +45,7 @@ RUN cd /root && \
         ubuntu-mate-themes \
         xrdp \
         xorgxrdp \
+        language-pack-ko \
         tightvncserver && \
     apt-get install --no-install-recommends -yqq \
         supervisor \
@@ -61,7 +62,9 @@ RUN cd /root && \
         git \
         libjpeg-dev \
         libpng-dev \
-        epiphany-browser && \
+        epiphany-browser \
+        openjdk-10-jdk \
+        openssh-server && \
     ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && dpkg-reconfigure -f noninteractive tzdata && \
     apt-get -y autoclean && apt-get -y autoremove && \
     apt-get -y purge $(dpkg --get-selections | grep deinstall | sed s/deinstall//g) && \
@@ -96,28 +99,28 @@ RUN cd /root && \
     #echo "Comment=Sets the keyboard to GB" >> /etc/xdg/autostart/setxkbmap.desktop
 
 # pytorch
-# ARG PYTHON_VERSION=3.6
-# RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
-#      chmod +x ~/miniconda.sh && \
-#      ~/miniconda.sh -b -p /opt/conda && \
-#      rm ~/miniconda.sh && \
-#      /opt/conda/bin/conda install -y python=$PYTHON_VERSION numpy pyyaml scipy ipython mkl mkl-include cython typing && \
-#      /opt/conda/bin/conda install -y -c pytorch magma-cuda90 && \
-#      /opt/conda/bin/conda clean -ya
-# ENV PATH /opt/conda/bin:$PATH
-# # This must be done before pip so that requirements.txt is available
-# WORKDIR /opt/pytorch
-# COPY . .
+ARG PYTHON_VERSION=3.6
+RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
+     chmod +x ~/miniconda.sh && \
+     ~/miniconda.sh -b -p /opt/conda && \
+     rm ~/miniconda.sh && \
+     /opt/conda/bin/conda install -y python=$PYTHON_VERSION numpy pyyaml scipy ipython mkl mkl-include cython typing && \
+     /opt/conda/bin/conda install -y -c pytorch magma-cuda90 && \
+     /opt/conda/bin/conda clean -ya
+ENV PATH /opt/conda/bin:$PATH
+# This must be done before pip so that requirements.txt is available
+WORKDIR /opt/pytorch
+COPY . .
 
-# RUN git submodule update --init
-# RUN TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
-#     CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
-#     pip install -v .
+RUN git submodule update --init
+RUN TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
+    CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
+    pip install -v .
 
-# RUN git clone https://github.com/pytorch/vision.git && cd vision && pip install -v .
+RUN git clone https://github.com/pytorch/vision.git && cd vision && pip install -v .
 
-# WORKDIR /workspace
-# RUN chmod -R a+w /workspace
+WORKDIR /workspace
+RUN chmod -R a+w /workspace
 
 # khaiii
 # RUN git clone https://github.com/kakao/khaiii.git
@@ -134,10 +137,6 @@ RUN cd /root && \
 # RUN cmake ..
 # RUN make all
 # RUN make resource
-
-# RUN apt-get install -y language-pack-ko
-# RUN locale-gen en_US.UTF-8
-# RUN update-locale LANG=en_US.UTF-8
 
 ADD   xrdp.ini /etc/xrdp/xrdp.ini
 
