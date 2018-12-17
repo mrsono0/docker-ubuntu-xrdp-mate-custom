@@ -60,7 +60,7 @@ RUN cd /root && \
         cmake \
         git \
         libjpeg-dev \
-        libpng-dev &&\
+        libpng-dev \
         epiphany-browser && \
     ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && dpkg-reconfigure -f noninteractive tzdata && \
     apt-get -y autoclean && apt-get -y autoremove && \
