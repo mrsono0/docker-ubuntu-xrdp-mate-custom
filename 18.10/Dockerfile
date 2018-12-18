@@ -125,20 +125,19 @@ WORKDIR /workspace
 RUN chmod -R a+w /workspace
 
 # khaiii
-# RUN git clone https://github.com/kakao/khaiii.git
-# WORKDIR /workspace/khaiii
+RUN git clone https://github.com/kakao/khaiii.git
+WORKDIR /workspace/khaiii
 
-# RUN pip install cython
-# RUN pip install --upgrade pip
+RUN pip install cython
+RUN pip install --upgrade pip
 
-# RUN pip install cmake
-# RUN mkdir build
+RUN mkdir build
 
-# WORKDIR /workspace/khaiii/build
+WORKDIR /workspace/khaiii/build
 
-# RUN cmake ..
-# RUN make all
-# RUN make resource
+RUN cmake ..
+RUN make all
+RUN make resource
 
 ADD   xrdp.ini /etc/xrdp/xrdp.ini
 
