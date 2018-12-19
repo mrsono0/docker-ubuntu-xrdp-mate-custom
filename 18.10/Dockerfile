@@ -6,7 +6,7 @@ FROM ubuntu:18.10
 ENV DEBIAN_FRONTEND noninteractive
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:GB
+ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 RUN cd /root && \
@@ -145,13 +145,8 @@ RUN make resource
 ENV Z_VERSION="0.8.0"
 ENV LOG_TAG="[ZEPPELIN_${Z_VERSION}]:" \
 Z_HOME="/opt/zeppelin"
-# LANG=en_US.UTF-8 \
-# LC_ALL=en_US.UTF-8
 
 RUN echo "$LOG_TAG update and install basic packages" && \
-# apt-get -y update && \
-# apt-get install -y locales && \
-# locale-gen $LANG && \
 apt-get install -y software-properties-common && \
 apt -y autoclean && \
 apt -y dist-upgrade && \
@@ -176,11 +171,7 @@ apt-get -y update && \
 apt-get install -y bzip2 \
 libglib2.0-0 libxext6 libsm6 libxrender1 \
 git mercurial subversion && \
-echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-# wget --quiet https://repo.continuum.io/miniconda/Miniconda2-4.3.11-Linux-x86_64.sh -O ~/miniconda.sh && \
-# /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-# rm ~/miniconda.sh
-# ENV PATH /opt/conda/bin:$PATH
+echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh
 
 RUN echo "$LOG_TAG Install python related packages" && \
 apt-get -y update && \
