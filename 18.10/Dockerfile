@@ -147,9 +147,9 @@ ENV LOG_TAG="[ZEPPELIN_${Z_VERSION}]:" \
 Z_HOME="/opt/zeppelin"
 
 RUN echo "$LOG_TAG update and install basic packages" && \
-apt-get install -y software-properties-common && \
-apt -y autoclean && \
-apt -y dist-upgrade && \
+# apt-get install -y software-properties-common && \
+# apt -y autoclean && \
+# apt -y dist-upgrade && \
 apt-get install -y build-essential
 
 RUN echo "$LOG_TAG install tini related packages" && \
