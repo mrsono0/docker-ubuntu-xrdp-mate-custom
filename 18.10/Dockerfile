@@ -175,14 +175,14 @@ echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh
 
 RUN echo "$LOG_TAG Install python related packages" && \
 apt-get -y update && \
-apt-get install -y python-dev python-pip && \
+apt-get install -y python3-dev python3-pip && \
 apt-get install -y gfortran && \
 # numerical/algebra packages
- apt-get install -y libblas-dev libatlas-dev liblapack-dev && \
+ apt-get install -y libblas-dev libatlas-base-dev liblapack-dev && \
 # font, image for matplotlib
 apt-get install -y libpng-dev libfreetype6-dev libxft-dev && \
 # for tkinter
-apt-get install -y python-tk libxml2-dev libxslt-dev zlib1g-dev && \
+apt-get install -y python3-tk libxml2-dev libxslt-dev zlib1g-dev && \
 pip install numpy && \
 pip install matplotlib
 
