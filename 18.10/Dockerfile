@@ -139,7 +139,6 @@ RUN cmake ..
 RUN make all
 RUN make resource
 
-
 # zeppelin
 # `Z_VERSION` will be updated by `dev/change_zeppelin_version.sh`
 ENV Z_VERSION="0.8.0"
@@ -148,6 +147,7 @@ Z_HOME="/opt/zeppelin"
 
 RUN echo "$LOG_TAG update and install basic packages" && \
 # apt-get install -y software-properties-common && \
+apt install apt-transport-https software-properties-common && \
 # apt -y autoclean && \
 # apt -y dist-upgrade && \
 apt-get install -y build-essential
@@ -190,6 +190,8 @@ RUN echo "$LOG_TAG Install R related packages" && \
 echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" | tee -a /etc/apt/sources.list && \
 gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
 gpg -a --export E084DAB9 | apt-key add - && \
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
+add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' && \
 apt-get -y update && \
 apt-get -y install r-base r-base-dev && \
 R -e "install.packages('knitr', repos='http://cran.us.r-project.org')" && \
