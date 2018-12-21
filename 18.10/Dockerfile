@@ -1,6 +1,7 @@
 # xrdp
 #FROM ubuntu:latest
 #FROM rattydave/ubuntu-ssh:18.10
+# ubuntu:18.10 = cosmic
 FROM ubuntu:18.10
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -147,8 +148,8 @@ Z_HOME="/opt/zeppelin"
 
 RUN echo "$LOG_TAG update and install basic packages" && \
 # apt-get install -y software-properties-common && \
-apt-get install python-software-properties && \
-# apt install apt-transport-https software-properties-common && \
+# apt-get install python-software-properties && \
+# dockeapt install apt-transport-https software-properties-common && \
 # apt -y autoclean && \
 # apt -y dist-upgrade && \
 apt-get install -y build-essential
@@ -192,7 +193,8 @@ echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" | tee -a /etc/apt/so
 gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
 gpg -a --export E084DAB9 | apt-key add - && \
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
-add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' && \
+# add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' && \
+add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu cosmic-cran35/' && \
 apt-get -y update && \
 apt-get -y install r-base r-base-dev && \
 R -e "install.packages('knitr', repos='http://cran.us.r-project.org')" && \
