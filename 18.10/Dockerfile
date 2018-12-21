@@ -212,8 +212,8 @@ pip install matplotlib
 RUN echo "$LOG_TAG Download Zeppelin binary" && \
 wget -O /tmp/zeppelin-${Z_VERSION}-bin-all.tgz http://archive.apache.org/dist/zeppelin/zeppelin-${Z_VERSION}/zeppelin-${Z_VERSION}-bin-all.tgz && \
 tar -zxvf /tmp/zeppelin-${Z_VERSION}-bin-all.tgz && \
-rm -rf /tmp/zeppelin-${Z_VERSION}-bin-all.tgz && \
-mv /tmp/zeppelin-${Z_VERSION}-bin-all ${Z_HOME}
+mv /tmp/zeppelin-${Z_VERSION}-bin-all ${Z_HOME} && \
+rm -rf /tmp/zeppelin-${Z_VERSION}-bin-all.tgz
 
 RUN echo "$LOG_TAG Cleanup" && \
 apt-get autoclean && \
@@ -227,5 +227,4 @@ ADD xrdp.ini /etc/xrdp/xrdp.ini
 ADD startup.sh /root/startup.sh
 CMD ["/bin/bash", "/root/startup.sh"]
 
-EXPOSE 3389
-EXPOSE 8080
+EXPOSE 22 8080 8888 3389
