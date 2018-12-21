@@ -127,14 +127,15 @@ RUN chmod -R a+w /workspace
 
 # khaiii
 RUN git clone https://github.com/kakao/khaiii.git
-WORKDIR /workspace/khaiii
+# WORKDIR /workspace/khaiii
+WORKDIR /opt/khaiii
 
 RUN pip install cython
 RUN pip install --upgrade pip
 
 RUN mkdir build
 
-WORKDIR /workspace/khaiii/build
+WORKDIR /opt/khaiii/build
 
 RUN cmake ..
 RUN make all
@@ -148,8 +149,9 @@ Z_HOME="/opt/zeppelin"
 
 RUN echo "$LOG_TAG update and install basic packages" && \
 # apt-get install -y software-properties-common && \
-# apt-get install python-software-properties && \
+# apt-get install -y python-software-properties && \
 # dockeapt install apt-transport-https software-properties-common && \
+# dockeapt install apt-transport-https python-software-properties && \
 apt install apt-transport-https && \
 apt -y autoclean && \
 apt -y dist-upgrade && \

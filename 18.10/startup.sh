@@ -33,6 +33,7 @@ fi
 #cat /etc/hosts.ori  >/etc/hosts
 #cat hosts >> /etc/hosts
 
+# /opt/zeppelin/bin/zeppelin.sh
 
 #This has to be the last command!
 /usr/bin/supervisord -n
