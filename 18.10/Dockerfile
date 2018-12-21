@@ -150,8 +150,9 @@ RUN echo "$LOG_TAG update and install basic packages" && \
 # apt-get install -y software-properties-common && \
 # apt-get install python-software-properties && \
 # dockeapt install apt-transport-https software-properties-common && \
-# apt -y autoclean && \
-# apt -y dist-upgrade && \
+apt install apt-transport-https && \
+apt -y autoclean && \
+apt -y dist-upgrade && \
 apt-get install -y build-essential
 
 RUN echo "$LOG_TAG install tini related packages" && \
@@ -188,24 +189,24 @@ apt-get install -y python3-tk libxml2-dev libxslt-dev zlib1g-dev && \
 pip install numpy && \
 pip install matplotlib
 
-RUN echo "$LOG_TAG Install R related packages" && \
-echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" | tee -a /etc/apt/sources.list && \
-gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
-gpg -a --export E084DAB9 | apt-key add - && \
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
-# add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' && \
-add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu cosmic-cran35/' && \
-apt-get -y update && \
-apt-get -y install r-base r-base-dev && \
-R -e "install.packages('knitr', repos='http://cran.us.r-project.org')" && \
-R -e "install.packages('ggplot2', repos='http://cran.us.r-project.org')" && \
-R -e "install.packages('googleVis', repos='http://cran.us.r-project.org')" && \
-R -e "install.packages('data.table', repos='http://cran.us.r-project.org')" && \
-# for devtools, Rcpp
- apt-get -y install libcurl4-gnutls-dev libssl-dev && \
-R -e "install.packages('devtools', repos='http://cran.us.r-project.org')" && \
-R -e "install.packages('Rcpp', repos='http://cran.us.r-project.org')" && \
-Rscript -e "library('devtools'); library('Rcpp'); install_github('ramnathv/rCharts')"
+# RUN echo "$LOG_TAG Install R related packages" && \
+# echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" | tee -a /etc/apt/sources.list && \
+# gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
+# gpg -a --export E084DAB9 | apt-key add - && \
+# apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
+# # add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' && \
+# add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu cosmic-cran35/' && \
+# apt-get -y update && \
+# apt-get -y install r-base r-base-dev && \
+# R -e "install.packages('knitr', repos='http://cran.us.r-project.org')" && \
+# R -e "install.packages('ggplot2', repos='http://cran.us.r-project.org')" && \
+# R -e "install.packages('googleVis', repos='http://cran.us.r-project.org')" && \
+# R -e "install.packages('data.table', repos='http://cran.us.r-project.org')" && \
+# # for devtools, Rcpp
+#  apt-get -y install libcurl4-gnutls-dev libssl-dev && \
+# R -e "install.packages('devtools', repos='http://cran.us.r-project.org')" && \
+# R -e "install.packages('Rcpp', repos='http://cran.us.r-project.org')" && \
+# Rscript -e "library('devtools'); library('Rcpp'); install_github('ramnathv/rCharts')"
 
 RUN echo "$LOG_TAG Download Zeppelin binary" && \
 wget -O /tmp/zeppelin-${Z_VERSION}-bin-all.tgz http://archive.apache.org/dist/zeppelin/zeppelin-${Z_VERSION}/zeppelin-${Z_VERSION}-bin-all.tgz && \
