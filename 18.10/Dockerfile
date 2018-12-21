@@ -147,7 +147,8 @@ Z_HOME="/opt/zeppelin"
 
 RUN echo "$LOG_TAG update and install basic packages" && \
 # apt-get install -y software-properties-common && \
-apt install apt-transport-https software-properties-common && \
+apt-get install python-software-properties && \
+# apt install apt-transport-https software-properties-common && \
 # apt -y autoclean && \
 # apt -y dist-upgrade && \
 apt-get install -y build-essential
