@@ -127,15 +127,14 @@ RUN chmod -R a+w /workspace
 
 # khaiii
 RUN git clone https://github.com/kakao/khaiii.git
-# WORKDIR /workspace/khaiii
-WORKDIR /opt/khaiii
+WORKDIR /workspace/khaiii
 
 RUN pip install cython
 RUN pip install --upgrade pip
 
 RUN mkdir build
 
-WORKDIR /opt/khaiii/build
+WORKDIR /workspace/khaiii/build
 
 RUN cmake ..
 RUN make all
