@@ -7,7 +7,7 @@ FROM ubuntu:18.10
 ENV DEBIAN_FRONTEND noninteractive
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
+ENV LANGUAGE en_US:US
 ENV LC_ALL en_US.UTF-8
 
 RUN cd /root && \
@@ -15,7 +15,7 @@ RUN cd /root && \
     apt-get update -y && \ 
     apt-get install -yqq locales  && \ 
     echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \ 
-    echo 'LANGUAGE="en_US:en"' >> /etc/default/locale && \ 
+    echo 'LANGUAGE="en_US:US"' >> /etc/default/locale && \ 
     echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale && \ 
     locale-gen en_US.UTF-8 && \ 
     update-locale LANG=en_US.UTF-8  && \ 
